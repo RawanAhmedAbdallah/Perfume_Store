@@ -55,7 +55,8 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                       click: (){
                         Navigator.push(
                           context,
-                            MaterialPageRoute(builder: (context) =>  ProductsScreen(id: snapshot.data![index]?.id,
+                            MaterialPageRoute(builder: (context) => ProductsScreen(
+                              id: snapshot.data![index]?.id,
                         )),
                         );
                       }

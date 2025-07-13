@@ -1,15 +1,13 @@
-
-
 import 'package:forget_me_not/database/db_operations.dart';
 import 'package:forget_me_not/models/cart.dart';
 import 'package:forget_me_not/pref/shared_pref_controller.dart';
 
 class CartDbController extends DbOperations<Cart> {
-  int userId = SharedPrefController().getValueFor<int>(PrefKeys.id.name)!;
+  int userId = SharedPrefController().getValueFor<int>(key: PrefKeys.id.name)!;
+  //int? userId = SharedPrefController().getValueFor<int>(key:PrefKeys.id.name)!;
 
   @override
   Future<int> create(Cart model) async {
-    // User add new Item for the first time to the cart
     return await database.insert(Cart.tableName, model.toMap());
   }
 
@@ -25,18 +23,18 @@ class CartDbController extends DbOperations<Cart> {
 
   @override
   Future<List<Cart>> read() async {
-  //SELECT cart.id, cart.product_id, cart.count, cart.total, cart.price, product.name as product_name
-  // FROM cart JOIN products ON cart.product_id = products.id
-  //WHERE cart.user_id = ?
-  // List<Map<String, dynamic>> rowsMap = await database.query(
-  //   Cart.tableName,
-  //   where: 'user_id = ?',
-  //   whereArgs: [userId],
-  // );
-    List<Map<String, dynamic>> rowsMap = await database.rawQuery(
-        'SELECT cart.id, cart.product_id, cart.count, cart.total, cart.price, cart.user_id, products.name '
-        'FROM cart JOIN products ON cart.product_id = products.id '
-        'WHERE cart.user_id = ?',[userId]);
+    // SELECT cart.id, cart.product_id, cart.count, cart.total, cart.price, product.name as product_name
+    //  FROM cart JOIN products ON cart.product_id = products.id
+    // WHERE cart.user_id = ??
+    List<Map<String, dynamic>> rowsMap = await database.query(
+      Cart.tableName,
+      where: 'user_id = ?',
+      whereArgs: [userId],
+    );
+     //List<Map<String, dynamic>> rowsMap = await database.rawQuery(
+     //    'SELECT cart.id, cart.product_id, cart.count, cart.total, cart.price, cart.user_id, products.name '
+     //    'FROM cart JOIN products ON cart.product_id = products.id '
+     //    'WHERE cart.user_id = ?',[userId]);
     print(rowsMap);
     return rowsMap.map((rowMap) => Cart.fromMap(rowMap)).toList();
   }

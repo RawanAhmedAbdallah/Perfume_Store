@@ -9,9 +9,11 @@ import 'package:http/http.dart' as http;
 
 
 class PaymentsApiController with ApiHelper{
+
   Future <List<Payments>>  payments() async {
-    Uri uri = Uri.parse(ApiSettings.paymentCards);
+    Uri uri = Uri.parse(ApiSettings.paymentCards.replaceFirst('{id}', ''));
     var response = await http.get(uri, headers: headers);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       var jsonArray = jsonResponse['list'] as List;
@@ -21,7 +23,11 @@ class PaymentsApiController with ApiHelper{
     return [];
   }
 
-  Future <Payments?> createPayments({required String holderName,required String cardNumber, required String expDate, required String cvv,required String type }) async {
+
+  Future<ApiResponse<Payments>> createPayments({
+    required String holderName,required String cardNumber, required String expDate,
+    required String cvv,required String type
+  }) async {
     Uri uri = Uri.parse(ApiSettings.paymentCards);
     print(uri);
     var response = await http.post(uri,body: {
@@ -31,13 +37,18 @@ class PaymentsApiController with ApiHelper{
     'cvv': cvv,
     'type': type,
     });
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201 || response.statusCode == 400) {
       var jsonResponse = jsonDecode(response.body);
-      var jsonArray = jsonResponse['object'];
-      print(jsonArray);
-      return Payments.fromJson(jsonArray);
+      var jsonObject = jsonResponse['object'];
+      Payments payments = Payments.fromJson(jsonObject);
+
+      return ApiResponse<Payments>(
+        message: jsonResponse['message'],
+        success: jsonResponse['status'],
+        object: payments,
+      );
     }
-    return null;
+    return ApiResponse(message: 'Something went wrong', success: false);
   }
 
 
@@ -64,6 +75,7 @@ class PaymentsApiController with ApiHelper{
     return failedResponse;
   }
 
+
   Future<ApiResponse> deletePayment({required int id,required String holderName,required String cardNumber, required String expDate, required String cvv,required String type}) async {
     Uri uri = Uri.parse(ApiSettings.paymentCards);
     var response = await http.delete(uri, body: {
@@ -73,7 +85,7 @@ class PaymentsApiController with ApiHelper{
       'cvv': cvv,
       'type': type,
     });
-    if (response.statusCode == 200 || response.statusCode == 400) {
+    if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       if (response.statusCode == 200) {
         var jsonObject = jsonResponse['data'];

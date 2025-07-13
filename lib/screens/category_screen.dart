@@ -5,7 +5,6 @@ import 'package:forget_me_not/screens/sub_category_screen.dart';
 import 'package:forget_me_not/widgets/CategoryCard.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key,this.id}) : super(key: key);
   final int? id;
@@ -58,7 +57,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           press: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) =>  SubCategoryScreen(id: snapshot.data![index]?.id,
+                              MaterialPageRoute(builder: (context) =>  SubCategoryScreen(
+                                id: snapshot.data![index]?.id,
 
                               )),
                             );
@@ -68,7 +68,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                        );
                       }
                    );
-    }return Center(
+                }return Center(
               child: Text(
               'NO DATA',
               style: GoogleFonts.montserrat(

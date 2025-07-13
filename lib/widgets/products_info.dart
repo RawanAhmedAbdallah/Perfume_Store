@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:forget_me_not/get/cart_getx_controller.dart';
+import 'package:forget_me_not/models/cart.dart';
+import 'package:forget_me_not/models/product_details.dart';
+import 'package:forget_me_not/new_model/product.dart';
+import 'package:forget_me_not/pref/shared_pref_controller.dart';
 import 'package:forget_me_not/screens/cart_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
-
 
 class ProductsInfo extends StatelessWidget {
   final String nameEn;
@@ -122,28 +124,28 @@ class ProductsInfo extends StatelessWidget {
         //      textDirection: TextDirection.rtl,
         //    ),
         //),
-          const SizedBox(height: 65,),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CartScreen()),);
-            },
-            icon: const Icon(Icons.shopping_cart_sharp,size: 22,),
-            label: Text("Add To Cart",style: GoogleFonts.nunito(fontSize: 18,fontWeight:FontWeight.bold),),
-            style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF9DEC2BA),
-              minimumSize: const Size(double.infinity, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-          ),
-         // const SizedBox(
-         //   height: 20,
-         // ),
-//
-        ],
+       const SizedBox(height: 65,),
+   //ElevatedButton.icon(
+   //  onPressed: () {
+   //    Navigator.push(context,
+   //      MaterialPageRoute(builder: (context) => const CartScreen()),);
+   //  },
+   //  icon: Icon(Icons.shopping_cart_sharp,size: 22),
+   //  label: Text("Add To Cart",style: GoogleFonts.nunito(fontSize: 18,fontWeight:FontWeight.bold),),
+   //  style: ElevatedButton.styleFrom(
+   //    backgroundColor: const Color(0xFF9DEC2BA),
+   //    minimumSize: const Size(double.infinity, 50),
+   //    shape: RoundedRectangleBorder(
+   //      borderRadius: BorderRadius.circular(30)
+   //),
+   //
+   // // SizedBox(height: 20,),
+
+   ],
       ),
     );
   }
-}
+  }
+
+
+

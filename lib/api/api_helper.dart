@@ -13,6 +13,7 @@ mixin ApiHelper {
     return {
       HttpHeaders.authorizationHeader: SharedPrefController().token,
       HttpHeaders.acceptHeader: 'application/json',
+
     };
   }
 }

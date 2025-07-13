@@ -1,130 +1,94 @@
+import 'package:forget_me_not/database/controllers/cart_db_controller.dart';
+import 'package:forget_me_not/models/api_response.dart';
+import 'package:forget_me_not/models/cart.dart';
 import 'package:get/get.dart';
-import 'package:forget_me_not/models/products.dart';
-
 
 class CartGetxController extends GetxController {
 
-  final cartItems = [];
   RxBool loading = false.obs;
-  final Total = 0.0.obs;
-  RxList<Products> cart = <Products>[].obs;
+  RxDouble total = 0.0.obs;
+  RxInt count = 0.obs;
+  RxList<Cart> cartItems = <Cart>[].obs;
 
-  //final CartDbController _apiController = CartDbController();
+  final CartDbController _apiController = CartDbController();
 
   static CartGetxController get to => Get.find<CartGetxController>();
 
   @override
   void onInit() {
     // TODO: implement onInit
-    read();
+    readCart();
     super.onInit();
   }
 
-  void read() async {
-    loading.value = true;
-    //cart.value = await _apiController.read();
-    loading.value = false;
+ void readCart() async {
+   loading.value = true;
+   cartItems.value = await _apiController.read();
+   loading.value = false;
+ }
+
+  Future<ApiResponse> create(Cart cart) async {
+    int index =
+    cartItems.indexWhere((element) => element.productId == cart.productId);
+    if (index == -1) {
+      int newRowId = await _apiController.create(cart);
+      if (newRowId != 0) {
+        total.value = total.value;
+        count.value += 1;
+        cart.id = newRowId;
+        cartItems.add(cart);
+
+      }
+      return getResponse(newRowId != 0);
+    } else {
+     // int quantity = await _apiController.getQuantity(cart.productId);
+      int newCount = cartItems[index].count + 1;
+      return changeCount(index, newCount);
+    }
   }
 
-//CartGetxController() {
-//  loadCart();
-//}
-//loadCart() async {
-//  loading(true);
-// var cartItems = await cartDbController.read();
+  Future<ApiResponse> changeCount(int index, int count2) async {
+    bool isDelete = count2 == 0;
+    Cart cart = cartItems[index];
+    bool result = isDelete
+        ? await _apiController.delete(cart.id)
+        : await _apiController.update(cart);
 
-//  @override
-//  void onInit() {
-//    // TODO: implement onInit
-//    cartDbController.read()
-//    super.onInit();
-//  }
+    if (result) {
+      if (isDelete) {
+        total.value -= cart.total;
+        count.value -= 1;
+        cartItems.removeAt(index);
+      } else {
+        cart.count = count2;
+        cart.total = (cart.price * cart.count) ;
 
-//   for (var i = 0; i < cartItems.length; i++) {
-//     Cart cart  =
-//     ( cartDbController.update(cartItems[i]['productId'])) as Cart;
-//     Total(Total.value + cartItems[i]['price'] * cartItems[i]['quantity']);
-//     cartItems.add({'product': cartItems[i]['products'], 'quantity': cartItems[i]['quantity']});
-//   }
-//   loading(false);
-// }
+        total.value += cart.total;
+        count.value += 1;
+        cartItems[index] = cart;
+      }
+      update();
+    }
 
+    return getResponse(result);
+  }
 
-//class CartController extends GetxController {
-// Products products = {}.obs;
+  Future<ApiResponse> clear() async {
+    bool cleared = await _apiController.clear();
+    if (cleared) {
+      total.value = 0;
+      count.value = 0;
+      cartItems.clear();
+      update();
+    }
+    return getResponse(cleared);
+  }
 
-// void addProductToCart(Products products) {
-//   if (productsMap.containsKey(products)) {
-//     productsMap[products] += 1;
-//   } else {
-//     productsMap[products] = 1;
-//   }
-// }
-
-// void removeProductsFarmCart(Products products) {
-//   if (productsMap.containsKey(products) &&
-//       productsMap[products] == 1) {
-//     productsMap.removeWhere((key, value) => key == products);
-//   } else {
-//     productsMap[products] -= 1;
-//   }
-
-
-// }
-
-// void removeOneProduct(Products products) {
-//   productsMap.removeWhere((key, value) => key == products);
-// }
-
-// void clearAllProducts() {
-//   Get.defaultDialog(
-//     title: "Clean Products",
-//     titleStyle: const TextStyle(
-//       fontSize: 18,
-//       color: Colors.black,
-//       fontWeight: FontWeight.bold,
-//     ),
-//     middleText: 'Are you sure you need clear products',
-//     middleTextStyle: const TextStyle(
-//       fontSize: 18,
-//       color: Colors.black,
-//       fontWeight: FontWeight.bold,
-//     ),
-//     backgroundColor: Colors.grey,
-//     radius: 10,
-//     textCancel: " No ",
-//     cancelTextColor: Colors.white,
-//     textConfirm: " YES ",
-//     confirmTextColor: Colors.white,
-//   // onCancel: () {
-//   //   Get.toNamed(Get.cartScreen);
-//   // },
-//     onConfirm: () {
-//       products.clear();
-//       Get.back();
-//     },
-
-//   );
-// }
-
-// get productTotal =>
-//     products.entries.map((e) => e.key.price * e.value).toList();
-
-// get total => productsMap.entries
-//     .map((e) => e.key.price * e.value)
-//     .toList()
-//     .reduce((value, element) => value + element)
-//     .toStringAsFixed(2);
-
-// int quantity() {
-//   if (products.isEmpty) {
-//     return 0;
-//   } else {
-//     return productsMap.entries
-//         .map((e) => e.value)
-//         .toList()
-//         .reduce((value, element) => value + element);
-//   }
-//}
-
+  ApiResponse getResponse(bool success) {
+    return ApiResponse(
+      message:
+      success ? 'Operation completed successfully' : 'Operation failed!',
+      success: success,
+    );
+  }
 }

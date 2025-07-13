@@ -6,9 +6,7 @@
      late String productsCount;
      late String subCategoriesCount;
      late String imageUrl;
-
      Category();
-
      Category.fromJson(Map<String, dynamic> json) {
        id = json['id'];
        nameEn = json['name_en'];

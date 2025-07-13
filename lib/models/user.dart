@@ -47,7 +47,6 @@ class City {
     nameEn = json['name_en'];
     nameAr = json['name_ar'];
   }
-
 }
 
 class Store {

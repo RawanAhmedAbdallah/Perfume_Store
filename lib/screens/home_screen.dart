@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:forget_me_not/notifications/fb_notifications.dart';
+import 'package:forget_me_not/screens/notification_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:forget_me_not/api/controllers/auth_api_controller.dart';
@@ -22,12 +24,51 @@ class HomeScreen extends StatefulWidget with Helpers {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with Helpers {
-  FavoriteGetxController controller =
-  Get.put<FavoriteGetxController>(FavoriteGetxController());
+class _HomeScreenState extends State<HomeScreen> with Helpers{
+  FavoriteGetxController controller = Get.put<FavoriteGetxController>(FavoriteGetxController());
+  int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+   // requestNotificationPermissions();
+   // initializeForegroundNotificationForAndroid();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //body: pages[index],
+     //bottomNavigationBar: NavigationBar(
+     //  height: 70,
+     //    selectedIndex: index,
+     //    onDestinationSelected: (index) => setState(() {
+     //      this.index =index;
+     //    }),
+     //    destinations: [
+     //      NavigationDestination(
+     //          icon: Icon(Icons.category_outlined),
+     //          label: 'Category',
+     //        selectedIcon: Icon(Icons.category),
+     //      ),
+     //      NavigationDestination(
+     //        icon: Icon(Icons.favorite),
+     //        label: 'Favorite',
+     //        selectedIcon: Icon(Icons.favorite),
+     //      ),
+     //      NavigationDestination(
+     //        icon: Icon(Icons.shopping_cart),
+     //        label: 'Cart',
+     //        selectedIcon: Icon(Icons.shopping_cart),
+     //      ),
+     //      NavigationDestination(
+     //        icon: Icon(Icons.settings),
+     //        label: 'Settings',
+     //        selectedIcon: Icon(Icons.settings),
+     //      ),
+
+     //    ],
+     //),
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF9F5F2),
       appBar: AppBar(
@@ -45,6 +86,18 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
             fontSize: 22,
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.notifications_active)),
+        ],
       ),
       drawer: SafeArea(
         child: Drawer(
@@ -181,9 +234,10 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                             borderRadius: BorderRadius.circular(15),
                             child: Image.network(
                               snapshot.data!.slider[i].imageUrl,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitWidth,
                               //'images/img7.jpg',
                               width: 300,
+                              height: 300,
                             ),
                           ),
                         );
@@ -204,10 +258,10 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 190,),
+                        const SizedBox(width: 200,),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFF9DEC2BA),
+                            backgroundColor: const Color(0xFF9DEC2BA),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -226,8 +280,7 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                       ],
                     ),
                     SizedBox(height: 15,),
-                    SizedBox(
-                      height: 128,
+                    SizedBox(height: 128,
                       child: GridView.builder(
                         itemCount: snapshot.data!.categories.length,
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -264,11 +317,10 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                                               ),
                                               child: Image.network(
                                                 //snapshot.data!.categories[index].imageUrl
-                                                snapshot.data!.categories[index]
-                                                    .imageUrl,
+                                                snapshot.data!.categories[index].imageUrl,
                                                 height: 80,
                                                 width: double.infinity,
-                                                fit: BoxFit.cover,
+                                                fit: BoxFit.contain,
                                               ),
                                             ),
                                             const SizedBox(height: 5,),
@@ -284,10 +336,7 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                                                       snapshot.data!
                                                           .categories[index]
                                                           .nameEn,
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                          fontWeight: FontWeight
-                                                              .bold),),
+                                                      style: GoogleFonts.lato(fontWeight: FontWeight.bold),),
                                                     //Text(
                                                     //  snapshot.data!
                                                     //      .categories[index]
@@ -308,6 +357,7 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                       ),
                     ),
                     const SizedBox(height: 30,),
+
                     Row(
                       children: [
                         Padding(
@@ -321,10 +371,10 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                             ),
                           ),
                         ),
-                        SizedBox(width: 135,),
+                        SizedBox(width: 150,),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF9DEC2BA),
+                            backgroundColor: Color(0xFF9DEC2BA),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -403,14 +453,14 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                                         Text(
                                           snapshot.data!.latestProducts[index]
                                               .nameEn,
-                                          style: GoogleFonts.nunito(),),
+                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),),
 
                                         //Text('شانيل ',style: GoogleFonts.nunito(),),
 
                                         Text(
                                           snapshot.data!.famousProducts[index]
                                               .price,
-                                          style: GoogleFonts.nunito(),),
+                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),),
 
                                       ],
                                     ),
@@ -434,10 +484,10 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                             ),
                           ),
                         ),
-                        SizedBox(width: 120,),
+                        SizedBox(width: 130,),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF9DEC2BA),
+                            backgroundColor: Color(0xFF9DEC2BA),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -514,14 +564,14 @@ class _HomeScreenState extends State<HomeScreen> with Helpers {
                                         Text(
                                           snapshot.data!.famousProducts[index]
                                               .nameEn,
-                                          style: GoogleFonts.nunito(),),
+                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),),
 
                                         //Text('شانيل ',style: GoogleFonts.nunito(),),
 
                                         Text(
                                           snapshot.data!.famousProducts[index]
                                               .price,
-                                          style: GoogleFonts.nunito(),),
+                                          style: GoogleFonts.lato(fontWeight: FontWeight.bold),),
 
                                       ],
                                     ),

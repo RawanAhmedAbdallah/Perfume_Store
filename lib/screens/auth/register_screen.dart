@@ -247,7 +247,6 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
     if (_nameTextController.text.isNotEmpty
         && _mobileTextController.text.isNotEmpty
         && _passwordTextController.text.isNotEmpty
-        //&&_cityIdTextController.text.isNotEmpty
     ) {
       return true;
     }
@@ -270,7 +269,6 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
     user.cityId = _selectedCityId.toString();
     user.gender = _gender;
     user.storeId = '0e5ae419-aac3-4395-a3e9-7c7c7f4e7080';
-
     return user;
   }
 }

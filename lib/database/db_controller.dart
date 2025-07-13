@@ -25,35 +25,23 @@ class DbController {
       version: 1,
       onOpen: (Database database) {},
       onCreate: (Database database, int version) async {
-       //TODO: Create tables (users, products, cart) USING SQL
-       await database.execute('CREATE TABLE users ('
-           'id INTEGER PRIMARY KEY AUTOINCREMENT,'
-           'name TEXT NOT NULL,'
-           'email TEXT NOT NULL,'
-           'password TEXT NOT NULL'
-           ')');
-
-        await database.execute('CREATE TABLE products ('
+        await database.execute('CREATE TABLE users ('
             'id INTEGER PRIMARY KEY AUTOINCREMENT,'
-            'name TEXT NOT NULL,'
-            'info TEXT NOT NULL,'
-            'price REAL NOT NULL,'
-            'quantity INTEGER DEFAULT (0),'
-            'user_id INTEGER,'
-            'FOREIGN KEY (user_id) references users(id)'
+            'mobile TEXT NOT NULL,'
+            'password TEXT NOT NULL'
             ')');
-        
         await database.execute('CREATE TABLE cart ('
             'id INTEGER PRIMARY KEY AUTOINCREMENT,'
+            'name TEXT NOT NULL,'
             'total REAL NOT NULL,'
-            // 'count INTEGER NOT NULL DEFAULT 1,'
             'count INTEGER NOT NULL,'
             'price REAL NOT NULL,'
             'user_id INTEGER,'
             'product_id INTEGER,'
-            'FOREIGN KEY (user_id) references users(id),'
-            'FOREIGN KEY (product_id) references products(id)'
+            'image_url TEXT NOT NULL,'
+            'FOREIGN KEY (user_id) references users(id)'
             ')');
+
       },
       onUpgrade: (Database database, int oldVersion, int newVersion) {},
       onDowngrade: (Database database, int oldVersion, int newVersion) {},

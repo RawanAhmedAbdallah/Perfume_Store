@@ -38,7 +38,7 @@ class _ChangePasswordState extends State<ChangePassword> with Helpers {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF9F5F2),
+      backgroundColor: const Color(0xFFF9F5F2),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
@@ -51,7 +51,7 @@ class _ChangePasswordState extends State<ChangePassword> with Helpers {
             fontSize: 18,
           ),
         ),
-        backgroundColor: Color(0xFFF9F5F2),
+        backgroundColor: const Color(0xFFF9F5F2),
         elevation: 0,
       ),
       body: Padding(

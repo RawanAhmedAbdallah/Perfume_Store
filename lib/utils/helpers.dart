@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 mixin Helpers {
   void showSnackBar(BuildContext context,
       {required String message, bool error = false}) {
@@ -11,4 +11,7 @@ mixin Helpers {
       ),
     );
   }
+// AppLocalizations get localizations{
+//   return AppLocalizations.of(this)!;
+// }
 }

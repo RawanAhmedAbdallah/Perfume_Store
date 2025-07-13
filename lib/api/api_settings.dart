@@ -14,6 +14,7 @@ class ApiSettings {
   static const String categories = '${_baseUrl}categories';
   static const String subcategories = '${_baseUrl}categories/{id}';
   static const String addresses = '${_baseUrl}addresses/{id}';
+  static const String addresses2 = '${_baseUrl}addresses';
   static const String home = '${_baseUrl}home';
   static const String offers = '${_baseUrl}offers';
   // static const String products = '${_baseUrl}sub-categories/{id}';
@@ -24,4 +25,6 @@ class ApiSettings {
   static const String paymentCards = '${_baseUrl}payment-cards/{id}';
   static const String contactRequests = '${_baseUrl}contact-requests';
   static const String faqs = '${_baseUrl}faqs';
+  static const String orders = '${_baseUrl}orders';
+  static const String order = '${_baseUrl}orders/{id}';
 }

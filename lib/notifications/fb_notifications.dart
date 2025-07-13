@@ -1,24 +1,25 @@
-//import 'dart:io';
-//import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
-//import 'package:flutter/material.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'dart:io';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:forget_me_not/firebase_options.dart';
 //
 //
-////typedef BackgroundMessageHandler = Future<void> Function(RemoteMessage message);
-//Future<void> firebaseMessagingBackgroundHandler(RemoteMessage remoteMessage) async {
+// //typedef BackgroundMessageHandler = Future<void> Function(RemoteMessage message);
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage remoteMessage) async {
 //  //BACKGROUND Notifications - iOS & Android
-// //await Firebase.initializeApp(
-// //  options: DefaultFirebaseOptions.currentPlatform,
-// //);
+// await Firebase.initializeApp(
+//   options: DefaultFirebaseOptions.currentPlatform,
+// );
 //  print('Message: ${remoteMessage.messageId}');
-//}
+// }
 //
-////GLOBAL
-//late AndroidNotificationChannel channel;
-//late FlutterLocalNotificationsPlugin localNotificationsPlugin;
+// //GLOBAL
+// late AndroidNotificationChannel channel;
+// late FlutterLocalNotificationsPlugin localNotificationsPlugin;
 //
-//mixin FbNotifications {
+// mixin FbNotifications {
 //  /// CALLED IN main function between ensureInitialized <-> runApp(widget);
 //  static Future<void> initNotifications() async {
 //    //Connect the previous created function with onBackgroundMessage to enable
@@ -126,4 +127,4 @@
 //      }
 //    }
 //  }
-//}
+// }

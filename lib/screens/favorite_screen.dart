@@ -13,8 +13,13 @@ class FavoritesScreen extends StatefulWidget with Helpers {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
-  final controller = Get.put(FavoriteGetxController());
+  FavoriteGetxController controller = Get.put<FavoriteGetxController>(FavoriteGetxController());
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +39,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         builder: (FavoriteGetxController controller) {
           if (controller.loading.isTrue) {
             return const Center(child: CircularProgressIndicator());
-          } else if (controller.products.isNotEmpty) {
+          } else if (controller.favoriteProducts.isNotEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -61,10 +66,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             return ListView.separated(
               itemBuilder: (context, index) {
                 return buildFavItems(
-                  imageUrl: controller.products[index].imageUrl,
+                  imageUrl: controller.favoriteProducts[index].imageUrl,
                   //nameAr: controller.products[index].nameAr,
-                  nameEn: controller.products[index].nameEn,
-                  productsId: controller.products[index].id,
+                  nameEn: controller.favoriteProducts[index].nameEn,
+                  productsId: controller.favoriteProducts[index].id,
 
                 );
               },
@@ -74,7 +79,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   thickness: 1,
                 );
               },
-              itemCount: controller.products.length,
+              itemCount: controller.favoriteProducts.length,
             );
           }
         },
@@ -103,7 +108,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Image.network(
-                    imageUrl,
+                   'images/perfume.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -143,17 +148,19 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               ),
             ),
             const Spacer(),
-            IconButton(
+            Obx(() => IconButton(
               onPressed: () {
-                controller.products.removeAt(productsId);
+                controller.favoriteProducts.removeAt(productsId);
+                print(controller.products.length);
               },
-              icon: const Icon(
+              icon:
+              const Icon(
                 Icons.favorite,
                 color: Colors.red,
                 size: 30,
               ),
             ),
-          ],
+            )],
         ),
       ),
     );

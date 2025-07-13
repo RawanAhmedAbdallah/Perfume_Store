@@ -1,12 +1,16 @@
+import 'package:forget_me_not/models/user.dart';
+
 class Address {
   late int id;
   late String name;
   late String info;
   late String contactNumber;
-  late String lat;
-  late String lang;
+  String? lat;
+  String? lang;
   late int cityId;
   late City city;
+
+  Address();
 
   Address.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -20,14 +24,13 @@ class Address {
   }
 }
 
-class City {
-  late int id;
-  late String nameEn;
-  late String nameAr;
-
-  City.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nameEn = json['name_en'];
-    nameAr = json['name_ar'];
-  }
-}
+// class City {
+//   late int id;
+//   late String nameEn;
+//   late String nameAr;
+//
+//   City.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     nameEn = json['name_en'];
+//     nameAr = json['name_ar'];
+//   }

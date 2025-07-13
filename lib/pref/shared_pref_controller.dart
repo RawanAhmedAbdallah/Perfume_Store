@@ -24,6 +24,7 @@ class SharedPrefController {
 Future<void> save ({required User user}) async {
     print(user.token);
     await _sharedPreferences.setBool(PrefKeys.isLoggedIn.name, true);
+    await _sharedPreferences.setInt(PrefKeys.id.name, user.id);
     await _sharedPreferences.setString(PrefKeys.cityId.name, user.cityId);
     await _sharedPreferences.setString(PrefKeys.name.name, user.name);
     await _sharedPreferences.setString(PrefKeys.mobile.name, user.mobile);
@@ -40,14 +41,14 @@ Future<bool> clear() async =>  _sharedPreferences.clear();
 
 bool get loggedIn => _sharedPreferences.getBool(PrefKeys.isLoggedIn.name) ?? false;
 
-//T? getByKe<T>({required String key}) {
-//  if(_sharedPreferences.containsKey(key)){
-//    return _sharedPreferences.get(key) as T;
-//  }
-//  return null;
-//}
+ T? getByKe<T>({required String key}) {
+   if(_sharedPreferences.containsKey(key)){
+     return _sharedPreferences.get(key) as T;
+   }
+   return null;
+ }
 
- T? getValueFor<T>(String key) {
+ T? getValueFor<T>({required String key}) {
    if (_sharedPreferences.containsKey(key)) {
      return _sharedPreferences.get(key) as T;
    }

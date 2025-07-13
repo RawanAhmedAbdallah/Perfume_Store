@@ -17,7 +17,8 @@ class ContactApiController with ApiHelper{
     if (response.statusCode == 201) {
       var jsonResponse = jsonDecode(response.body);
       return ApiResponse(
-          message: jsonResponse['message'], success: jsonResponse['status']);
+          message: jsonResponse['message'],
+          success: jsonResponse['status']);
     }
     return failedResponse;
   }

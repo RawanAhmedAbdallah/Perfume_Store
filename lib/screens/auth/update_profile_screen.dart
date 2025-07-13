@@ -29,7 +29,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> with Helpers 
   @override
   void dispose() {
     _nameTextController.dispose();
-
     super.dispose();
   }
 

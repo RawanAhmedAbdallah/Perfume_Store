@@ -30,6 +30,7 @@ class Cart {
     map['count'] = count;
     map['user_id'] = userId;
     map['product_id'] = productId;
+    map['name']  = productName;
     map['image_url'] = imageUrl;
     return map;
   }

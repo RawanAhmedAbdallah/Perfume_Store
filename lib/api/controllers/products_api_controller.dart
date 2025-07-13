@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:forget_me_not/api/api_helper.dart';
 import 'package:forget_me_not/api/api_settings.dart';
 import 'package:forget_me_not/models/api_response.dart';
+import 'package:forget_me_not/models/favorite_products.dart';
 import 'package:forget_me_not/models/product_details.dart';
 import 'package:forget_me_not/models/products.dart';
 import 'package:forget_me_not/pref/shared_pref_controller.dart';
@@ -75,7 +76,7 @@ class ProductsApiController with ApiHelper{
       var jsonResponse = jsonDecode(response.body);
       var jsonArray = jsonResponse['data'];
       return jsonArray
-          .map((jsonObject) => Products.fromJson(jsonObject))
+          .map((jsonObject) => FavoriteProducts.fromJson(jsonObject))
           .toList();
     }
     return [];

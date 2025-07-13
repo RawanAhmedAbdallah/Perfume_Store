@@ -4,11 +4,8 @@ import 'package:forget_me_not/models/addresses.dart';
 import 'package:forget_me_not/models/api_response.dart';
 
 class AddressGetxController extends GetxController {
-  RxBool loading = false.obs;
-  RxList<Address> addresses = <Address>[].obs;
-  final AddressApiController _apiController = AddressApiController();
 
-  static AddressGetxController get to => Get.find<AddressGetxController>();
+
 
   @override
   void onInit() {
@@ -23,32 +20,32 @@ class AddressGetxController extends GetxController {
     loading.value = false;
   }
 
-  Future<ApiResponse> createAddress({required String name, required String info, required String contactNumber, required int cityId }) async {
-    ApiResponse apiResponse =
-    await _apiController.createAddress(name: name,info: info,contactNumber: contactNumber,cityId: cityId);
-    if (apiResponse.success) {
-      addresses.add(apiResponse.object);
+  Future<ApiResponse> createAddress({required String name,
+    required String info, required String contactNumber, required int cityId }) async {
+    ApiResponse<Address> apiResponse =
+    await _apiController.createAddress(name: name,info: info,
+        contactNumber: contactNumber,cityId: cityId);
+    if (apiResponse.success && apiResponse.object != null) {
+      addresses.add(apiResponse.object!);
     }
     return apiResponse;
   }
 
-  // Future<ApiResponse> updateAddress({required int index}) async {
-  //   ApiResponse apiResponse =
-  //   await _apiController.updateAddress(index: addresses[index].id);
-  //   if (apiResponse.success) {
-  //     addresses.indexWhere;
-  //   }
-  //   return apiResponse;
-  // }
-
-  Future<ApiResponse> deleteAddress({required int id}) async {
+  Future<ApiResponse> updateAddress({required int index}) async {
     ApiResponse apiResponse =
-    await _apiController.deleteAddress(id: id);
+    await _apiController.updateAddress(id: addresses[index].id);
     if (apiResponse.success) {
-      addresses.removeAt(id);
+      addresses.indexWhere;
     }
     return apiResponse;
   }
 
+  Future<ApiResponse> delete({required int index}) async {
+    ApiResponse apiResponse = await _apiController.delete(id: addresses[index].id);
+    if (apiResponse.success) {
+      addresses.removeAt(index);
+    }
+    return apiResponse;
+  }
 }
 

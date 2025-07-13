@@ -1,19 +1,22 @@
 {
-  "Get Started": "",
+  "get_started": "هيا نبدأ",
 
   "login":"تسجيل الدخول",
-  "mobile": "رقم الهاتف",
-  "password": "كلمة المرور",
 
   "register": "إنشاء حساب",
   "name": "الإسم",
   "mobile":"رقم الهاتف",
   "password": "كلمة المرور",
 
-  "new_note": "إنشاء مُذكرة",
-  "update_note": "تعديل مُذكرة",
-  "note_hint":"أدخل العنوان و الوصف",
+  "language_title": "تغيير اللغة",
+  "language_sub_title": "إختر اللغة المناسبة",
+
+  "new_address": "إنشاء عنوان",
+  "update_address": "تعديل عنوان",
+  "address_hint":"أدخل العنوان و الوصف",
   "title": "العنوان",
   "info": "الوصف",
+  "contact_number": "رقم التواصل",
   "save": "حفظ"
+
 }

@@ -37,11 +37,12 @@ class AuthApiController with ApiHelper {
   }
 
   Future<ApiResponse> login(
-      {required String mobile, required String password}) async {
+      {required String mobile, required String password,required String fcm}) async {
     Uri uri = Uri.parse(ApiSettings.login);
     var response = await http.post(uri, body: {
       'mobile': mobile,
       'password': password,
+      'fcm':'fcm'
     });
     if (response.statusCode == 200 || response.statusCode == 400) {
       var jsonResponse = jsonDecode(response.body);

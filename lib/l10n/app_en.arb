@@ -1,19 +1,19 @@
 {
+  "get_started": "Get Started",
   "login": "Login",
-  "login_title": "Welcome back...",
-  "login_subtitle": "Enter email & password",
-  "email": "Email",
+  "register": "Register",
+  "name": "Name",
+  "mobile":"Mobile",
   "password": "Password",
 
-  "register": "Register",
-  "register_title": "Create new account...",
-  "register_subtitle": "Enter details below",
-  "name": "Name",
+  "language_title": "Change Language",
+  "language_sub_title": "Choose suitable language",
 
-  "new_note": "New Note",
-  "update_note": "Update Note",
-  "note_hint":"Enter title & info",
+  "new_address": "New address",
+  "update_address": "Update address",
+  "note_hint":"Enter address & info",
   "title": "Title",
   "info": "Info",
+  "contact_number": "Contact number",
   "save": "Save"
 }
